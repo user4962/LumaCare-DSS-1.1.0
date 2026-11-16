@@ -1,0 +1,25 @@
+scenario_id,expected_action,observed_action,expected_rule,expected_rule_observed,action_matches,invariants_passed,invariant_errors,passed,deterministic,risk_score,confidence,recommended_irradiance_mw_cm2,recommended_duration_seconds,estimated_additional_dose_j_cm2,fired_rules,requirement
+nominal,ALLOW,ALLOW,,True,True,True,,True,True,0.0,1.0,20.0,60.0,1.2,,No active rule permits the prescribed setpoint.
+thermal_warning,ADJUST,ADJUST,THERMAL_WARNING,True,True,True,,True,True,0.5,0.875,14.0,60.0,0.84,THERMAL_WARNING,Thermal warning membership reduces irradiance.
+thermal_limit,HOLD,HOLD,SKIN_TEMPERATURE_HIGH,True,True,True,,True,True,1.0,1.0,0.0,0.0,0.0,SKIN_TEMPERATURE_HIGH,Patient-specific temperature limit interrupts delivery.
+spo2_warning,ADJUST,ADJUST,SPO2_WARNING,True,True,True,,True,True,0.5,0.875,20.0,43.5,0.87,SPO2_WARNING,Oxygen-saturation warning membership reduces duration.
+spo2_limit,HOLD,HOLD,SPO2_CRITICAL,True,True,True,,True,True,1.0,1.0,0.0,0.0,0.0,SPO2_CRITICAL,Hard oxygen-saturation boundary interrupts delivery.
+pain_warning,ADJUST,ADJUST,PAIN_WARNING,True,True,True,,True,True,0.5,0.875,20.0,45.0,0.9,PAIN_WARNING,Reported pain within the warning zone reduces duration.
+pain_limit,HOLD,HOLD,PAIN_SEVERE,True,True,True,,True,True,1.0,1.0,0.0,0.0,0.0,PAIN_SEVERE,Patient-specific pain boundary interrupts delivery.
+adverse_event,HOLD,HOLD,ADVERSE_EVENT,True,True,True,,True,True,1.0,1.0,0.0,0.0,0.0,ADVERSE_EVENT,An adverse-event signal interrupts delivery.
+device_disconnect,HOLD,HOLD,DEVICE_DISCONNECTED,True,True,True,,True,True,1.0,1.0,0.0,0.0,0.0,DEVICE_DISCONNECTED,Loss of device connectivity interrupts delivery.
+contact_loss,HOLD,HOLD,APPLICATOR_CONTACT_LOST,True,True,True,,True,True,1.0,1.0,0.0,0.0,0.0,APPLICATOR_CONTACT_LOST,Loss of applicator contact interrupts delivery.
+invalid_calibration,HOLD,HOLD,CALIBRATION_INVALID,True,True,True,,True,True,1.0,1.0,0.0,0.0,0.0,CALIBRATION_INVALID,Invalid or expired calibration interrupts delivery.
+telemetry_warning,ADJUST,ADJUST,TELEMETRY_AGE_WARNING,True,True,True,,True,True,0.5,0.833,18.333,55.0,1.0083149999999999,TELEMETRY_AGE_WARNING|OUTPUT_RESOLUTION_FLOOR,Aging telemetry reduces irradiance and duration.
+telemetry_stale,HOLD,HOLD,TELEMETRY_STALE,True,True,True,,True,True,1.0,1.0,0.0,0.0,0.0,TELEMETRY_STALE,Telemetry at the hard freshness boundary interrupts delivery.
+dose_headroom,ADJUST,ADJUST,DOSE_HEADROOM_CAP,True,True,True,,True,True,1.0,1.0,20.0,25.0,0.5,DOSE_WARNING|DOSE_HEADROOM_CAP,Duration is capped to the remaining per-session dose.
+session_dose_exhausted,COMPLETE,COMPLETE,SESSION_DOSE_EXHAUSTED,True,True,True,,True,True,0.0,1.0,0.0,0.0,0.0,SESSION_DOSE_EXHAUSTED,Exhausted per-session dose completes delivery without a safety event.
+cumulative_dose_exhausted,COMPLETE,COMPLETE,CUMULATIVE_DOSE_EXHAUSTED,True,True,True,,True,True,0.0,1.0,0.0,0.0,0.0,CUMULATIVE_DOSE_EXHAUSTED,Exhausted cumulative dose completes delivery without a safety event.
+photosensitivity_risk,ADJUST,ADJUST,PHOTOSENSITIVITY_RISK,True,True,True,,True,True,0.7,0.925,13.7,60.0,0.822,PHOTOSENSITIVITY_RISK,Clinician-assessed photosensitivity reduces irradiance.
+thermal_sensitivity,ADJUST,ADJUST,THERMAL_SENSITIVITY,True,True,True,,True,True,0.6,0.9,15.8,60.0,0.948,THERMAL_SENSITIVITY,Clinician-assessed thermal sensitivity reduces irradiance.
+prescription_caps,ADJUST,ADJUST,RX_IRRADIANCE_CAP,True,True,True,,True,True,0.5,1.0,25.0,120.0,3.0,RX_IRRADIANCE_CAP|RX_DURATION_CAP,Prescription ceilings cap irradiance and duration.
+fractional_output_resolution,ALLOW,ALLOW,OUTPUT_RESOLUTION_FLOOR,True,True,True,,True,True,0.0,1.0,1.234,10.234,0.012628756,OUTPUT_RESOLUTION_FLOOR,Fractional setpoints are quantized downward and recorded without changing the action.
+setpoint_below_resolution,COMPLETE,COMPLETE,SETPOINT_BELOW_OUTPUT_RESOLUTION,True,True,True,,True,True,0.0,1.0,0.0,0.0,0.0,DOSE_WARNING|DOSE_HEADROOM_CAP|SETPOINT_BELOW_OUTPUT_RESOLUTION,Dose headroom below the configured setpoint resolution completes delivery.
+active_contraindication,HOLD,HOLD,PATIENT_CONTRAINDICATION,True,True,True,,True,True,1.0,1.0,0.0,0.0,0.0,PATIENT_CONTRAINDICATION,An active contraindication interrupts delivery.
+simultaneous_faults,HOLD,HOLD,DEVICE_DISCONNECTED,True,True,True,,True,True,1.0,1.0,0.0,0.0,0.0,DEVICE_DISCONNECTED|APPLICATOR_CONTACT_LOST|CALIBRATION_INVALID|SKIN_TEMPERATURE_HIGH|SPO2_CRITICAL,Multiple hard faults preserve conservative precedence and explanations.
+fault_with_exhausted_dose,HOLD,HOLD,APPLICATOR_CONTACT_LOST,True,True,True,,True,True,1.0,1.0,0.0,0.0,0.0,APPLICATOR_CONTACT_LOST|SESSION_DOSE_EXHAUSTED,A safety interlock takes precedence over dose completion.

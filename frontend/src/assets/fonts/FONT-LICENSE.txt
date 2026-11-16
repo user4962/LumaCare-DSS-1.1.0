@@ -1,0 +1,4 @@
+Poppins (Regular, Medium, Bold)
+Copyright 2020 The Poppins Project Authors (https://github.com/itfoundry/Poppins)
+Licensed under the SIL Open Font License, Version 1.1 (https://openfontlicense.org).
+The font files are bundled unchanged so that the console renders identically offline.
